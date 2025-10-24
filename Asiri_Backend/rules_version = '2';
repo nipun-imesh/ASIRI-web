@@ -1,0 +1,19 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+  match /tasks/{taskId}{
+    allow read, write: if request.auth != null;
+    
+    // allow read: if true; // - can read 
+    // allow read: if false; // - can't read
+    // allow write: if false;
+    // request:auth - user is authenticated (logged)
+  }
+  
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
